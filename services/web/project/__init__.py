@@ -8,7 +8,7 @@ from flask import (
 )
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
-import pdf.scan
+# import pdf.scan
 
 app = Flask(__name__)
 app.config.from_object("project.config.Config")
@@ -33,7 +33,8 @@ def hello_world():
 
 @app.route("/pdf")
 def hello_world():
-    return pdf.scan.question_answer('', '', 'hello')
+    # return pdf.scan.question_answer('', '', 'hello')
+    return '123';
 
 
 @app.route("/static/<path:filename>")

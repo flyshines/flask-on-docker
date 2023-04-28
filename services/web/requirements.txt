@@ -7,3 +7,4 @@ numpy==1.22.1
 scikit-learn
 tensorflow>=2.0.0
 tensorflow-hub
+PyMuPDF==1.16.14

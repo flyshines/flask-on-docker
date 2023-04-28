@@ -33,3 +33,14 @@ Uses gunicorn + nginx.
     ```
 
     Test it out at [http://localhost:1337](http://localhost:1337). No mounted folders. To apply changes, the image must be re-built.
+
+
+### pip pacage install
+   ```sh
+      pip install -r requirements.txt --proxy=127.0.0.1:7890
+   ```
+
+### build
+   ```sh
+   docker-compose up -d --build
+   ```

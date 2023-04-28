@@ -130,10 +130,12 @@ def question_answer(url, file, question):
     # if url.strip() != '' and file != None:
     #     return '[ERROR]: Both URL and PDF is provided. Please provide only one (eiter URL or PDF).'
 
-    if url.strip() != '':
-        glob_url = url
-        download_pdf(glob_url, 'corpus.pdf')
-        load_recommender('corpus.pdf')
+    if True:
+        #glob_url = url
+        #download_pdf(glob_url, 'corpus.pdf')
+        #load_recommender('corpus.pdf')
+        print('local file' + question)
+        load_recommender('./corpus.pdf')
 
     else:
         old_file_name = file.name

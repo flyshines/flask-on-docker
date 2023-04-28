@@ -31,10 +31,10 @@ def hello_world():
     return jsonify(hello="world")
 
 
-@app.route("/pdf")
-def hello_world(filename):
+#@app.route("/pdf")
+#def hello_world(filename):
     # return pdf.scan.question_answer('', '', 'hello')
-    return send_from_directory(app.config["STATIC_FOLDER"], filename)
+ #   return send_from_directory(app.config["STATIC_FOLDER"], filename)
 
 
 @app.route("/static/<path:filename>")

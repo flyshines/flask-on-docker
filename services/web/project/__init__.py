@@ -32,9 +32,9 @@ def hello_world():
 
 
 @app.route("/pdf")
-def hello_world():
+def hello_world(filename):
     # return pdf.scan.question_answer('', '', 'hello')
-    return '123'
+    return send_from_directory(app.config["STATIC_FOLDER"], filename)
 
 
 @app.route("/static/<path:filename>")

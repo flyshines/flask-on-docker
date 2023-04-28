@@ -34,7 +34,7 @@ def hello_world():
 @app.route("/pdf")
 def hello_world():
     # return pdf.scan.question_answer('', '', 'hello')
-    return '123';
+    return '123'
 
 
 @app.route("/static/<path:filename>")

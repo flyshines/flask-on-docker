@@ -130,7 +130,7 @@ def question_answer(url, file, question):
     # if url.strip() != '' and file != None:
     #     return '[ERROR]: Both URL and PDF is provided. Please provide only one (eiter URL or PDF).'
 
-    if True:
+    if False:
         #glob_url = url
         #download_pdf(glob_url, 'corpus.pdf')
         #load_recommender('corpus.pdf')
@@ -139,6 +139,7 @@ def question_answer(url, file, question):
 
     else:
         old_file_name = file.name
+        print('upload file:' + old_file_name)
         file_name = file.name
         file_name = file_name[:-12] + file_name[-4:]
         os.remove(file_name)

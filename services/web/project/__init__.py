@@ -54,11 +54,12 @@ def upload_file():
     if request.method == "POST":
         file = request.files["file"]
         filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config["MEDIA_FOLDER"], filename))
-    return """
-    <!doctype html>
-    <title>upload new File</title>
-    <form action="" method=post enctype=multipart/form-data>
-      <p><input type=file name=file><input type=submit value=Upload>
-    </form>
-    """
+        file.save(os.path.join(app.config["STATIC_FOLDER"], filename))
+        return question_answer('', file, filename)
+    # return """
+    # <!doctype html>
+    # <title>upload new File</title>
+    # <form action="" method=post enctype=multipart/form-data>
+    #   <p><input type=file name=file><input type=submit value=Upload>
+    # </form>
+    # """

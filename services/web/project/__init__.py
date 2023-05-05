@@ -8,7 +8,7 @@ from flask import (
 )
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
-# import pdf.scan
+from . pdf.scan import question_answer
 
 app = Flask(__name__)
 app.config.from_object("project.config.Config")
@@ -31,10 +31,10 @@ def hello_world():
     return jsonify(hello="world")
 
 
-#@app.route("/pdf")
-#def hello_world(filename):
-    # return pdf.scan.question_answer('', '', 'hello')
- #   return send_from_directory(app.config["STATIC_FOLDER"], filename)
+@app.route("/pdf")
+def pdftest(key):
+   return question_answer('', '', 'hello ' + key)
+   #return send_from_directory(app.config["STATIC_FOLDER"], filename)
 
 
 @app.route("/static/<path:filename>")

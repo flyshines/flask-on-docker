@@ -8,7 +8,7 @@ from flask import (
 )
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
-#from . pdf.scan import question_answer
+from . pdf.scan import question_answer
 
 app = Flask(__name__)
 app.config.from_object("project.config.Config")
@@ -50,11 +50,11 @@ def upload_file():
         print('path=' + path)
         file.save(os.path.join(path, filename))
 
-        #return question_answer(path + '/' + filename, '', filename)
-    return """
-    <!doctype html>
-    <title>upload new File</title>
-    <form action="" method=post enctype=multipart/form-data>
-      <p><input type=file name=file><input type=submit value=Upload>
-    </form>
-    """
+        return question_answer(path + '/' + filename, '', filename)
+    # return """
+    # <!doctype html>
+    # <title>upload new File</title>
+    # <form action="" method=post enctype=multipart/form-data>
+    #   <p><input type=file name=file><input type=submit value=Upload>
+    # </form>
+    # """

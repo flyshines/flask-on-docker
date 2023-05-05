@@ -62,7 +62,7 @@ class SemanticSearch:
 
     def __init__(self):
 
-        embedding = "'https://tfhub.dev/google/universal-sentence-encoder/4"
+        embedding = "https://tfhub.dev/google/universal-sentence-encoder/4"
         # "https://tfhub.dev/google/universal-sentence-encoder-multilingual/3"
         #embedding = "https://hub.tensorflow.google.cn/google/universal-sentence-encoder/4"
 

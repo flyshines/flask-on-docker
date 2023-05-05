@@ -54,8 +54,11 @@ def upload_file():
     if request.method == "POST":
         file = request.files["file"]
         filename = secure_filename(file.filename)
-        file.save(os.path.join(app.config["STATIC_FOLDER"], filename))
-        return question_answer('', file, filename)
+        path = app.config["STATIC_FOLDER"]
+        print('path=' + path)
+        file.save(os.path.join(path, filename))
+
+        return question_answer(path + '/' + filename, '', filename)
     # return """
     # <!doctype html>
     # <title>upload new File</title>

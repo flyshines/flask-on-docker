@@ -7,6 +7,7 @@ WORKDIR /usr/src/app
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
+ENV TFHUB_CACHE_DIR ./tfhub_modules
 
 # install system dependencies
 RUN apt-get update && apt-get install -y netcat

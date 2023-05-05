@@ -62,9 +62,9 @@ class SemanticSearch:
 
     def __init__(self):
 
-        # embedding = "'https://tfhub.dev/google/universal-sentence-encoder/4"
+        embedding = "'https://tfhub.dev/google/universal-sentence-encoder/4"
         # "https://tfhub.dev/google/universal-sentence-encoder-multilingual/3"
-        embedding = "https://hub.tensorflow.google.cn/google/universal-sentence-encoder/4"
+        #embedding = "https://hub.tensorflow.google.cn/google/universal-sentence-encoder/4"
 
         self.use = hub.load(embedding)
         #self.use = tf.saved_model.load('./universal-sentence-encoder')
@@ -135,7 +135,7 @@ def question_answer(url, file, question):
         #download_pdf(glob_url, 'corpus.pdf')
         #load_recommender('corpus.pdf')
         print('local file' + question)
-        load_recommender('./corpus.pdf')
+        load_recommender('/usr/src/app/project/pdf/corpus.pdf')
 
     else:
         old_file_name = file.name

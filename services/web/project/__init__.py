@@ -32,8 +32,10 @@ def hello_world():
 
 
 @app.route("/pdf")
-def pdftest(key):
-   return question_answer('', '', 'hello ' + key)
+def pdftest():
+   value = request.args['value']
+   print(value)
+   return question_answer('', '', 'hello ' + value)
    #return send_from_directory(app.config["STATIC_FOLDER"], filename)
 
 

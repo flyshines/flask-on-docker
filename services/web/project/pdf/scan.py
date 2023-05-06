@@ -8,8 +8,10 @@ import fitz
 import re
 import numpy as np
 import tensorflow_hub as hub
-import os
 from sklearn.neighbors import NearestNeighbors
+
+
+recommender = None
 
 
 def download_pdf(url, output_path):
@@ -47,24 +49,26 @@ def text_to_chunks(texts, word_length=150, start_page=1):
 
     for idx, words in enumerate(text_toks):
         for i in range(0, len(words), word_length):
-            chunk = words[i:i + word_length]
-            if (i + word_length) > len(words) and (len(chunk) < word_length) and (
-                    len(text_toks) != (idx + 1)):
+            chunk = words[i : i + word_length]
+            if (
+                (i + word_length) > len(words)
+                and (len(chunk) < word_length)
+                and (len(text_toks) != (idx + 1))
+            ):
                 text_toks[idx + 1] = chunk + text_toks[idx + 1]
                 continue
             chunk = ' '.join(chunk).strip()
-            chunk = f'[{idx + start_page}]' + ' ' + '"' + chunk + '"'
+            chunk = f'[Page no. {idx+start_page}]' + ' ' + '"' + chunk + '"'
             chunks.append(chunk)
     return chunks
 
 
 class SemanticSearch:
-
     def __init__(self):
 
-        embedding = "https://tfhub.dev/google/universal-sentence-encoder/4"
+        #embedding = "https://tfhub.dev/google/universal-sentence-encoder/4"
         # "https://tfhub.dev/google/universal-sentence-encoder-multilingual/3"
-        #embedding = "https://hub.tensorflow.google.cn/google/universal-sentence-encoder/4"
+        embedding = "https://hub.tensorflow.google.cn/google/universal-sentence-encoder/4"
 
         self.use = hub.load(embedding)
         #self.use = tf.saved_model.load('./universal-sentence-encoder')
@@ -90,7 +94,7 @@ class SemanticSearch:
     def get_text_embedding(self, texts, batch=1000):
         embeddings = []
         for i in range(0, len(texts), batch):
-            text_batch = texts[i:(i + batch)]
+            text_batch = texts[i : (i + batch)]
             emb_batch = self.use(text_batch)
             embeddings.append(emb_batch)
         embeddings = np.vstack(embeddings)
@@ -99,57 +103,35 @@ class SemanticSearch:
 
 def load_recommender(path, start_page=1):
     global recommender
+    if recommender is None:
+        recommender = SemanticSearch()
+
     texts = pdf_to_text(path, start_page=start_page)
-    print(texts)
     chunks = text_to_chunks(texts, start_page=start_page)
     recommender.fit(chunks)
     return 'Corpus Loaded.'
 
 
-def generate_answer(question):
+def generate_prompt(question, path):
+    load_recommender(path)
     topn_chunks = recommender(question)
     prompt = ""
     prompt += 'search results:\n\n'
     for c in topn_chunks:
         prompt += c + '\n\n'
 
+    prompt += (
+        "Instructions: Compose a comprehensive reply to the query using the search results given. "
+        "Cite each reference using [ Page Number] notation (every result has this number at the beginning). "
+        "Citation should be done at the end of each sentence. If the search results mention multiple subjects "
+        "with the same name, create separate answers for each. Only include information found in the results and "
+        "don't add any additional information. Make sure the answer is correct and don't output false content. "
+        "If the text does not relate to the query, simply state 'Text Not Found in PDF'. Ignore outlier "
+        "search results which has nothing to do with the question. Only answer what is asked. The "
+        "answer should be short and concise. Answer step-by-step. \n\nQuery: {question}\nAnswer: "
+    )
+
     return prompt
 
-
-
-
-# main to this
-
-def question_answer(url, file, question):
-    # if openAI_key.strip() == '':
-    #     return '[ERROR]: Please enter you Open AI Key. Get your key here : https://platform.openai.com/account/api-keys'
-
-    # if url.strip() == '' and file == None:
-    #     return '[ERROR]: Both URL and PDF is empty. Provide atleast one.'
-
-    # if url.strip() != '' and file != None:
-    #     return '[ERROR]: Both URL and PDF is provided. Please provide only one (eiter URL or PDF).'
-
-    if True:
-        #glob_url = url
-        #download_pdf(glob_url, 'corpus.pdf')
-        #load_recommender('corpus.pdf')
-        print('local file' + question + 'path=' + url)
-        load_recommender(url)
-
-    else:
-        old_file_name = file.name
-        print('upload file:' + old_file_name)
-        file_name = file.name
-        file_name = file_name[:-12] + file_name[-4:]
-        os.remove(file_name)
-        os.rename(old_file_name, file_name)
-        load_recommender(file_name)
-
-    if question.strip() == '':
-        return '[ERROR]: Question field is empty'
-
-    return generate_answer(question)
-
-
-recommender = SemanticSearch()
+#path = 'C:\\Users\\Rouse\\Documents\\WeChat Files\\luosi411848\\FileStorage\\File\\2023-04\\1.二十大报告（文字实录）.pdf'
+#print(generate_answer('hello', path))

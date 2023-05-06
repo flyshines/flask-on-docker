@@ -8,7 +8,7 @@ from flask import (
 )
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
-from . pdf.scan import question_answer
+from . pdf.scan import generate_prompt
 from . pdf.scanner import load_recommender
 
 app = Flask(__name__)
@@ -56,12 +56,13 @@ def scan():
 def scan_ai():
     if request.method == "POST":
         file = request.files["file"]
+        question = request.files["question"]
         filename = secure_filename(file.filename)
         path = app.config["STATIC_FOLDER"]
         print('path=' + path)
         file.save(os.path.join(path, filename))
 
-        return question_answer(path + '/' + filename, '', filename)
+        return generate_prompt(question, path + '/' + filename)
     # return """
     # <!doctype html>
     # <title>upload new File</title>

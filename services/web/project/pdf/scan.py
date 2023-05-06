@@ -130,7 +130,7 @@ def generate_prompt(question, path):
         "search results which has nothing to do with the question. Only answer what is asked. The "
         "answer should be short and concise. Answer step-by-step. \n\nQuery: {question}\nAnswer: "
     )
-
+    prompt += f"Query: {question}\nAnswer:"
     return prompt
 
 #path = 'C:\\Users\\Rouse\\Documents\\WeChat Files\\luosi411848\\FileStorage\\File\\2023-04\\1.二十大报告（文字实录）.pdf'

@@ -36,29 +36,11 @@ def pdf_to_text(path, start_page=1, end_page=None):
     return text_list
 
 
-def text_to_chunks(texts, word_length=150, start_page=1):
-    text_toks = [t.split(' ') for t in texts]
-    chunks = []
-
-    for idx, words in enumerate(text_toks):
-        for i in range(0, len(words), word_length):
-            chunk = words[i:i + word_length]
-            if (i + word_length) > len(words) and (len(chunk) < word_length) and (
-                    len(text_toks) != (idx + 1)):
-                text_toks[idx + 1] = chunk + text_toks[idx + 1]
-                continue
-            chunk = ' '.join(chunk).strip()
-            chunk = f'[{idx + start_page}]' + ' ' + '"' + chunk + '"'
-            chunks.append(chunk)
-    return chunks
-
-
 
 def load_recommender(path, start_page=1):
     texts = pdf_to_text(path, start_page=start_page)
     print(texts)
-    chunks = text_to_chunks(texts, start_page=start_page)
-    return chunks
+    return texts
 
-a = load_recommender('C:\\Users\\Rouse\\Documents\\WeChat Files\\luosi411848\\FileStorage\\File\\2023-04\\1.二十大报告（文字实录）.pdf')
-print(a)
+# a = load_recommender('C:\\Users\\Rouse\\Documents\\WeChat Files\\luosi411848\\FileStorage\\File\\2023-04\\1.二十大报告（文字实录）.pdf')
+# print(a)

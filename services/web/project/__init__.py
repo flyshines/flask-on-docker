@@ -9,6 +9,7 @@ from flask import (
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 from . pdf.scan import question_answer
+from . pdf.scanner import load_recommender
 
 app = Flask(__name__)
 app.config.from_object("project.config.Config")
@@ -40,8 +41,18 @@ def staticfiles(filename):
 def mediafiles(filename):
     return send_from_directory(app.config["MEDIA_FOLDER"], filename)
 
+@app.route("/pdf/scan", methods=["GET", "POST"])
+def upload_file():
+    if request.method == "POST":
+        file = request.files["file"]
+        filename = secure_filename(file.filename)
+        path = app.config["STATIC_FOLDER"]
+        print('path=' + path)
+        file.save(os.path.join(path, filename))
 
-@app.route("/upload", methods=["GET", "POST"])
+        return load_recommender(path + '/' + filename)
+
+@app.route("/pdf/ai", methods=["GET", "POST"])
 def upload_file():
     if request.method == "POST":
         file = request.files["file"]

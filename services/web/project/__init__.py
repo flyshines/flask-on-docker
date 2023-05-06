@@ -56,10 +56,10 @@ def scan():
 def scan_ai():
     if request.method == "POST":
         file = request.files["file"]
-        question = request.files["question"]
+        question = request.form.get("question")
         filename = secure_filename(file.filename)
         path = app.config["STATIC_FOLDER"]
-        print('path=' + path)
+        print('path=' + path + ' question=' + question)
         file.save(os.path.join(path, filename))
 
         return generate_prompt(question, path + '/' + filename)

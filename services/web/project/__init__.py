@@ -42,7 +42,7 @@ def mediafiles(filename):
     return send_from_directory(app.config["MEDIA_FOLDER"], filename)
 
 @app.route("/pdf/scan", methods=["GET", "POST"])
-def upload_file():
+def scan():
     if request.method == "POST":
         file = request.files["file"]
         filename = secure_filename(file.filename)
@@ -53,7 +53,7 @@ def upload_file():
         return load_recommender(path + '/' + filename)
 
 @app.route("/pdf/ai", methods=["GET", "POST"])
-def upload_file():
+def scan_ai():
     if request.method == "POST":
         file = request.files["file"]
         filename = secure_filename(file.filename)

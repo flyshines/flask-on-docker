@@ -33,10 +33,11 @@ def scan_ai():
         file = request.files["file"]
         filename = secure_filename(file.filename)
         path = app.config["STATIC_FOLDER"]
+        model_path = app.config["MODEL_FOLDER"]
         file.save(os.path.join(path, filename))
-        model = predict.load_model('./model/saved_model.h5')
         fp = path + '/' + filename
         print(fp)
+        model = predict.load_model(model_path)
         # Predict single image
         return predict.classify(model, fp)
 

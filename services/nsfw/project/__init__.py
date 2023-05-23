@@ -10,6 +10,7 @@ from werkzeug.utils import secure_filename
 from . nsfw_detector import predict
 
 app = Flask(__name__)
+app.config.from_object("project.config.Config")
 
 @app.route("/")
 def hello_world():

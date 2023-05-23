@@ -36,7 +36,7 @@ def scan_ai():
         model = predict.load_model('./model/saved_model.h5')
 
         # Predict single image
-        return predict.classify(model, '/tmp/test.jpg')
+        return predict.classify(model, path)
 
     # return """
     # <!doctype html>

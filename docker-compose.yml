@@ -7,8 +7,20 @@ services:
     volumes:
       - ./services/web/:/usr/src/app/
       - /tmp/:/tmp/
-    ports:
-      - 5000:5000
+#    ports:
+#      - 5000:5000
+    network_mode: host
+    env_file:
+      - ./.env.prod
+    depends_on: nsfw
+
+  nsfw:
+    build: ./services/nsfw
+    command: python manage.py run -h 0.0.0.0
+    volumes:
+      - ./services/nsfw/:/usr/src/app/
+      - /tmp/:/tmp/
+    network_mode: host
     env_file:
       - ./.env.prod
 #    depends_on:

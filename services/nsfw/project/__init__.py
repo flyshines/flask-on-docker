@@ -12,6 +12,9 @@ from . nsfw_detector import predict
 app = Flask(__name__)
 app.config.from_object("project.config.Config")
 
+model_path = app.config["MODEL_FOLDER"]
+model = predict.load_model(model_path)
+
 @app.route("/")
 def hello_world():
     return jsonify(hello="world")
@@ -33,11 +36,9 @@ def scan_ai():
         file = request.files["file"]
         filename = secure_filename(file.filename)
         path = app.config["STATIC_FOLDER"]
-        model_path = app.config["MODEL_FOLDER"]
         file.save(os.path.join(path, filename))
         fp = path + '/' + filename
         print(fp)
-        model = predict.load_model(model_path)
         # Predict single image
         return predict.classify(model, fp)
 # 其他示例

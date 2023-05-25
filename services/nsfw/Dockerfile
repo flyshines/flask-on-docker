@@ -11,7 +11,7 @@ ENV PYTHONUNBUFFERED 1
 ENV TFHUB_CACHE_DIR /tmp/tfhub_modules
 
 # install system dependencies
-RUN apt-get update && apt-get install -y netcat
+RUN apt-get update && apt-get install ffmpeg libsm6 libxext6 -y netcat
 
 # install dependencies
 RUN pip install --upgrade pip

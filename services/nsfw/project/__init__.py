@@ -47,7 +47,7 @@ def scan_ai():
 
 
 @app.route("/video/ai", methods=["GET", "POST"])
-def scan_ai():
+def scan_image():
     if request.method == "POST":
         file = request.files["file"]
         filename = secure_filename(file.filename)

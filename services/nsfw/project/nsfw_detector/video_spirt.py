@@ -49,7 +49,7 @@ def video_to_image(srcFile, imageDir):
                 list.append(imageDir + '/' + str(i) + '.jpg')
         isOK, frame = videoCapture.read()
     print('图片抽取结果：', list)
-    return list
+    return imageDir
 
 
 

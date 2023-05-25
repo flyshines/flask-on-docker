@@ -1,4 +1,7 @@
-import os, cv2
+#! python
+
+import os
+import cv2
 
 
 def save_img(img, addr, num):

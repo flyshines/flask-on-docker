@@ -54,7 +54,7 @@ def scan_image():
         file.save(os.path.join(video_path, filename))
         fp = video_path + '/' + filename
 
-        list = video_spirt.video_to_image(fp, video_path + '/' + filename)
+        list = video_spirt.video_to_image(fp, video_path + '/' + str.split(filename)[0])
         print(fp)
         # Predict single image
         return predict.classify(model, fp, list)

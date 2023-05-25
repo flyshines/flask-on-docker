@@ -57,7 +57,7 @@ def scan_image():
         list = video_spirt.video_to_image(fp, video_path + '/' + str.split(filename, '.')[0])
         print(fp)
         # Predict single image
-        return predict.classify(model, fp, list)
+        return predict.classify(model, list)
 
 # 其他示例
 # {'2.jpg': {'sexy': 4.3454722e-05, 'neutral': 0.00026579265, 'porn': 0.0007733492, 'hentai': 0.14751932, 'drawings': 0.85139805}}

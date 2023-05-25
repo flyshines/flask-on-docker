@@ -5,3 +5,4 @@ tensorflow-hub==0.12.0
 pillow
 protobuf==3.20.*
 numpy
+opencv_python==4.7.0.72

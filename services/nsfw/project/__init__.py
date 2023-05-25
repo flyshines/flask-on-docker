@@ -8,11 +8,13 @@ from flask import (
 )
 from werkzeug.utils import secure_filename
 from . nsfw_detector import predict
+from . nsfw_detector import video_spirt
 
 app = Flask(__name__)
 app.config.from_object("project.config.Config")
 
 model_path = app.config["MODEL_FOLDER"]
+video_path = app.config["VIDEO_FOLDER"]
 model = predict.load_model(model_path)
 
 @app.route("/")
@@ -41,6 +43,22 @@ def scan_ai():
         print(fp)
         # Predict single image
         return predict.classify(model, fp)
+
+
+
+@app.route("/video/ai", methods=["GET", "POST"])
+def scan_ai():
+    if request.method == "POST":
+        file = request.files["file"]
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(video_path, filename))
+        fp = video_path + '/' + filename
+
+        list = video_spirt.video_to_image(fp, video_path + '/' + filename)
+        print(fp)
+        # Predict single image
+        return predict.classify(model, fp, list)
+
 # 其他示例
 # {'2.jpg': {'sexy': 4.3454722e-05, 'neutral': 0.00026579265, 'porn': 0.0007733492, 'hentai': 0.14751932, 'drawings': 0.85139805}}
 
